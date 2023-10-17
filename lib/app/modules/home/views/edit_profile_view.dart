@@ -1,31 +1,8 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-
-class EditProfileController extends GetxController {
-  final TextEditingController namaController = TextEditingController();
-  final TextEditingController posisiController = TextEditingController();
-  Rx<XFile?> pickedImage = Rx<XFile?>(null);
-
-  void getImage(ImageSource source) async {
-    final pickedImage = await ImagePicker().pickImage(source: source);
-    if (pickedImage != null) {
-      this.pickedImage.value = pickedImage;
-    }
-  }
-
-  void applyChanges() {
-    String newNama = namaController.text;
-    String newPosisi = posisiController.text;
-
-    // Implementasi logika untuk menerapkan perubahan
-
-    // Kembali ke halaman sebelumnya dengan hasil perubahan
-    Get.back(result: true);
-  }
-}
+import 'package:project/app/modules/home/controllers/edit_profile_controller.dart';
 
 class EditProfileView extends StatelessWidget {
   final EditProfileController controller = Get.put(EditProfileController());
@@ -42,6 +19,13 @@ class EditProfileView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Edit Profil'),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Get.back(); // Kembali ke halaman sebelumnya
+          },
+        ),
+        backgroundColor: Colors.grey[700], // Ganti warna app bar
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
@@ -49,11 +33,18 @@ class EditProfileView extends StatelessWidget {
           children: <Widget>[
             TextField(
               controller: controller.namaController,
-              decoration: InputDecoration(labelText: 'Nama Lengkap'),
+              decoration: InputDecoration(
+                labelText: 'Masukkan Nama Anda',
+                border: OutlineInputBorder(),
+              ),
             ),
+            SizedBox(height: 10),
             TextField(
               controller: controller.posisiController,
-              decoration: InputDecoration(labelText: 'Posisi / Jabatan'),
+              decoration: InputDecoration(
+                labelText: 'Posisi / Jabatan',
+                border: OutlineInputBorder(),
+              ),
             ),
             SizedBox(height: 20),
             Row(
@@ -62,10 +53,18 @@ class EditProfileView extends StatelessWidget {
                 ElevatedButton(
                   onPressed: () => controller.getImage(ImageSource.gallery),
                   child: Text('Pilih dari Galeri'),
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.grey[700], // Warna latar belakang tombol
+                    onPrimary: Colors.white, // Warna teks tombol
+                  ),
                 ),
                 ElevatedButton(
                   onPressed: () => controller.getImage(ImageSource.camera),
                   child: Text('Ambil dari Kamera'),
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.grey[700], // Warna latar belakang tombol
+                    onPrimary: Colors.white, // Warna teks tombol
+                  ),
                 ),
               ],
             ),
@@ -92,10 +91,15 @@ class EditProfileView extends StatelessWidget {
             ElevatedButton(
               onPressed: () => controller.applyChanges(),
               child: Text('Simpan Perubahan'),
+              style: ElevatedButton.styleFrom(
+                primary: Colors.grey[700], // Warna latar belakang tombol
+                onPrimary: Colors.white, // Warna teks tombol
+              ),
             ),
           ],
         ),
       ),
+      backgroundColor: Colors.grey[300], // Ganti latar belakang
     );
   }
 }

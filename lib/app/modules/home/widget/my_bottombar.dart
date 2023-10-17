@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:project/app/modules/home/views/profile_view.dart';
 
 typedef void OnTapCallback(int index);
@@ -15,10 +16,7 @@ class MyBottomBar extends StatelessWidget {
       currentIndex: index,
       onTap: (int newIndex) {
         if (newIndex == 2) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => ProfileView()),
-          );
+          Get.to(() => ProfileView());
         } else {
           onTap(newIndex);
         }

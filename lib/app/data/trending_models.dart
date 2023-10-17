@@ -1,15 +1,13 @@
-// trendingtab_controller.dart
-
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:project/app/data/models/images_models.dart';
 
-class TrendingTabController extends ChangeNotifier {
+class trendingModels extends ChangeNotifier {
+  // list of shoe for sale
   List<nftCard> nftShop = [
     nftCard(
       name: "apiens_1",
       price: "236",
-      description: "Legend Shoe for your experients",
+      description: "Legend Shoe for your experiments",
       imagePath: "lib/images/apiens_1.png",
     ),
     nftCard(
@@ -32,34 +30,28 @@ class TrendingTabController extends ChangeNotifier {
     ),
   ];
 
+  // list of items in user cart
   List<nftCard> userCart = [];
 
-  RxString selectedImagePath = ''.obs;
-  List<RxString> cartImagePaths = <RxString>[].obs;
-
+  // get list of nftCard for sale
   List<nftCard> getNftList() {
     return nftShop;
   }
 
+  // get cart
+  List<nftCard> getUserCart() {
+    return userCart;
+  }
+
+  // add item to cart
   void addItemToCart(nftCard nftCard) {
     userCart.add(nftCard);
-    cartImagePaths.add(nftCard.imagePath.obs);
-
-    selectedImagePath.value = cartImagePaths.last.value;
-
     notifyListeners();
   }
 
+  // remove item from cart
   void removeItemFromCart(nftCard nftCard) {
     userCart.remove(nftCard);
-    cartImagePaths.remove(nftCard.imagePath);
-
-    if (cartImagePaths.isNotEmpty) {
-      selectedImagePath.value = cartImagePaths.last.value;
-    } else {
-      selectedImagePath.value = '';
-    }
-
     notifyListeners();
   }
 }
